@@ -41,7 +41,10 @@ renders, audio, voice takes, reference media, and screenshots.
   work on Windows first: use `path.join`, avoid shell-only syntax in npm scripts, and quote paths.
 - Requirements (same as the reference): Node 18+, Playwright with Chromium
   (`npm i -g playwright && npx playwright install chromium`), and ffmpeg on PATH. For voice-overs,
-  Python with `faster-whisper` for word timing and, optionally, the ElevenLabs connector.
+  Python with `faster-whisper` for word timing. Narration is local by default with Kokoro:
+  `pip install kokoro-onnx soundfile`, put `kokoro-v1.0.onnx` and `voices-v1.0.bin` in
+  `%LOCALAPPDATA%\VideoMaker\models\kokoro\` (or set `KOKORO_DIR`), then
+  `python tools/tts_kokoro.py <piece>` followed by `node tools/voice.mjs <piece>`. ElevenLabs is optional.
 
 ## Intended stack and structure (from the reference)
 
