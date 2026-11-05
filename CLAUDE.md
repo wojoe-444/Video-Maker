@@ -1,0 +1,89 @@
+# CLAUDE.md
+
+Guidance for Claude Code working in this repository.
+
+## What this is
+
+Video-Maker is Walter's personal tool for making short animated videos in code. It starts from
+[cth9191/animate](https://github.com/cth9191/animate) (MIT), a Claude Code skill that draws every frame
+procedurally on one `<canvas>`, synthesizes the score in code, and renders to MP4 with a headless
+browser and ffmpeg. We adapt it to our own uses rather than tracking it as a fork. Keep its license
+notice when copying its code in.
+
+The repo is new. Most of the structure below is the plan, taken from the reference. Update this file
+as the real layout lands.
+
+## The golden rule: code here, content in AppData
+
+This repo holds **code and structure only**: the kit, styles, templates, tools, and docs.
+Generated content and working media never go in the repo. That covers pieces in progress, frames,
+renders, audio, voice takes, reference media, and screenshots.
+
+- Content root on Windows: `%LOCALAPPDATA%\VideoMaker\`
+  (e.g. `C:\Users\walte\AppData\Local\VideoMaker\`). Suggested layout:
+  - `pieces\<name>\` for a piece's `piece.json`, `src\`, `brief.md`, `LOG.md`, `assets\`, `audio\`,
+    `frames\`, `renders\`, `review\`
+  - `references\<look>\` for reference media used to match a new style
+  - `styles\<name>\` for personal styles that aren't ready to promote into the repo
+- Tools take a piece path as an argument, so point them at the AppData folder, never at a path in
+  the repo. Where the reference defaults to `<project>/pieces/`, change the default to the AppData
+  content root (allow an env var override such as `VIDEOMAKER_HOME`).
+- `.gitignore` must exclude `pieces/`, `frames/`, `renders/`, `review/`, `*.mp4`, `*.wav`, built
+  `index.html` files, `node_modules/` and `__pycache__/` as a safety net.
+- A style that is proven and reusable may be promoted into the repo (code, `STYLE.md`, a small
+  `sample.png`, and a tiny `demo/`). Its reference media still stays local.
+
+## Local setup
+
+- Local clone: `C:\Users\walte\Repos\Videos-Maker` (Windows). Write paths and scripts so they
+  work on Windows first: use `path.join`, avoid shell-only syntax in npm scripts, and quote paths.
+- Requirements (same as the reference): Node 18+, Playwright with Chromium
+  (`npm i -g playwright && npx playwright install chromium`), and ffmpeg on PATH. For voice-overs,
+  Python with `faster-whisper` for word timing and, optionally, the ElevenLabs connector.
+
+## Intended stack and structure (from the reference)
+
+Plain JavaScript (ES modules, Node tools) plus HTML canvas and Web Audio. There are no frameworks
+and no bundler; the build concatenates sources into one self-contained `index.html`.
+
+In the reference everything lives under `plugins/animate/skills/animate/`:
+
+| path | role |
+|---|---|
+| `SKILL.md`, `intake.md`, `craft.md`, `new-style.md` | the workflow and the rules learned building pieces |
+| `grammar/` | `STORY.md`, `FORMATS.md` (8 short-form formats), `FRAME.md` (what any frame needs) |
+| `kit/` | the shared runtime: `core.js` (seeded RNG, boil, cameras, easing), `morph.js` (shape-morph transitions), `board.js` (storyboard), `score-head.js` / `score-tail.js` (synth + loudness) |
+| `styles/<name>/` | plug-in looks: `kit.js`, `STYLE.md`, `sample.png`, `demo/` (cut-paper, crosshatch, riso, sketchbook, math, pixel, isometric) |
+| `templates/` | starting points: `piece/` (morph chain), `beat-cut/` (cuts on the beat), `style/` |
+| `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/` |
+| `examples/history-of-ai/` | a complete 60s reference piece |
+
+A **piece** is `piece.json` (format: width, height, fps, bpm, duration, frames; `style`; review safe
+areas) plus `src/head.html`, `src/scenes.js`, `src/bridges.js`, `src/score.js`.
+
+## Workflow
+
+1. Intake, then three cheap check-ins before animating: **story** (beat table), **look** (2 to 4
+   style frames), **storyboard** (every beat).
+2. Build: `node tools/build.mjs <piece>` makes `index.html`. Preview it in a browser; `?t=12.5`
+   freezes a frame.
+3. Check while building: `tools/tile.mjs`, `tools/still.mjs`, `tools/storyboard.mjs`.
+4. Export: `node tools/export.mjs <piece> --share [--formats 9:16,1:1,16:9]` writes frames, WAV,
+   and `renders/final.mp4` / `share.mp4` into the piece folder (in AppData).
+5. Review: `node tools/review.mjs <piece>` must pass. Report its numbers, not "looks good".
+
+## Rules carried over from the reference
+
+- **Deterministic:** seeded `RNG(...)` and the boil index only. Never `Math.random()` or wall-clock
+  time in a piece.
+- **Single file, all code:** the built `index.html` has no external URLs, `data:` URIs, or web
+  fonts. The only exceptions are the user's own assets (embedded by the build) and a music track
+  (joined at export).
+- **Facts on screen are web-checked** and listed with sources in the piece's `brief.md`.
+- **Kit changes must not silently change existing pieces:** use `tools/framehash.mjs` to confirm
+  pixel-identical output.
+
+## Conventions
+
+- Keep tools as small standalone Node scripts that take paths as arguments.
+- Commit only code, docs, and small sample images. Never commit generated media.
