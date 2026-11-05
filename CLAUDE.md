@@ -10,8 +10,10 @@ procedurally on one `<canvas>`, synthesizes the score in code, and renders to MP
 browser and ffmpeg. We adapt it to our own uses rather than tracking it as a fork. Keep its license
 notice when copying its code in.
 
-The repo is new. Most of the structure below is the plan, taken from the reference. Update this file
-as the real layout lands.
+The reference skill's contents are copied to the repo root (`kit/`, `tools/`, `styles/`, `templates/`,
+`grammar/`, `examples/`, and the workflow docs `SKILL.md`, `intake.md`, `craft.md`, `new-style.md`). Its MIT
+license is kept in `LICENSE-animate`. Where the docs say `pieces/<name>`, a bare piece name now resolves to the
+content root (see `tools/paths.mjs`).
 
 ## The golden rule: code here, content in AppData
 
@@ -26,8 +28,8 @@ renders, audio, voice takes, reference media, and screenshots.
   - `references\<look>\` for reference media used to match a new style
   - `styles\<name>\` for personal styles that aren't ready to promote into the repo
 - Tools take a piece path as an argument, so point them at the AppData folder, never at a path in
-  the repo. Where the reference defaults to `<project>/pieces/`, change the default to the AppData
-  content root (allow an env var override such as `VIDEOMAKER_HOME`).
+  the repo. `build`, `export`, `review`, `voice` and `tile` also accept a bare piece name and resolve it with
+  `tools/paths.mjs` to `%VIDEOMAKER_HOME%\pieces\<name>` (default `%LOCALAPPDATA%\VideoMaker`).
 - `.gitignore` must exclude `pieces/`, `frames/`, `renders/`, `review/`, `*.mp4`, `*.wav`, built
   `index.html` files, `node_modules/` and `__pycache__/` as a safety net.
 - A style that is proven and reusable may be promoted into the repo (code, `STYLE.md`, a small
@@ -46,7 +48,7 @@ renders, audio, voice takes, reference media, and screenshots.
 Plain JavaScript (ES modules, Node tools) plus HTML canvas and Web Audio. There are no frameworks
 and no bundler; the build concatenates sources into one self-contained `index.html`.
 
-In the reference everything lives under `plugins/animate/skills/animate/`:
+In the reference everything lives under `plugins/animate/skills/animate/`; here it lives at the repo root:
 
 | path | role |
 |---|---|

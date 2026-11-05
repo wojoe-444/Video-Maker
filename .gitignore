@@ -1,0 +1,13 @@
+# Generated content lives in the content root (%LOCALAPPDATA%\VideoMaker), never here. Safety net:
+pieces/
+frames/
+renders/
+review/
+voice/
+*.mp4
+*.wav
+*.mp3
+index.html
+node_modules/
+__pycache__/
+.env
