@@ -39,7 +39,8 @@ function fvGlow(x, y, r, c, a = 0.35) {
 // the core mark: a flat body with shade and rim. P = outline (world coords), c = 6-digit hex
 function fvBody(P, c, o = {}) {
   const q = bbox(P), bb = { x: q.x0, y: q.y0, w: q.x1 - q.x0, h: q.y1 - q.y0 }, d = o.rim ?? clamp(Math.min(bb.w, bb.h) * 0.035, 2, 9);
-  ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.clip();
+  const path = () => { if (o.sharp) { ctx.beginPath(); P.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); } else trace(P, true); };
+  ctx.save(); path(); ctx.fillStyle = c; ctx.fill(); ctx.clip();
   if (o.shade !== false) {   // the lower-right shade: a half-plane through the centre, tilted 35 degrees
     const cx = bb.x + bb.w * (o.sx ?? 0.58), cy = bb.y + bb.h * (o.sy ?? 0.5), R = Math.hypot(bb.w, bb.h);
     ctx.save(); ctx.translate(cx, cy); ctx.rotate(-0.6);
