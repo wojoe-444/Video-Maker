@@ -30,6 +30,11 @@ renders, audio, voice takes, reference media, and screenshots.
 - Tools take a piece path as an argument, so point them at the AppData folder, never at a path in
   the repo. `build`, `export`, `review`, `voice` and `tile` also accept a bare piece name and resolve it with
   `tools/paths.mjs` to `%VIDEOMAKER_HOME%\pieces\<name>` (default `%LOCALAPPDATA%\VideoMaker`).
+- **Gotcha:** anything launched by the Claude desktop app (an MSIX package), including Remote Control
+  sessions, has its `AppData\Local` writes silently redirected to
+  `%LOCALAPPDATA%\Packages\Claude_<id>\LocalCache\Local\`, so the files don't show up under
+  `%LOCALAPPDATA%\VideoMaker` in Explorer. When running tools from the Claude app, set `VIDEOMAKER_HOME`
+  to a folder outside AppData (Walter's references live in `Downloads\THD_Video References\`).
 - `.gitignore` must exclude `pieces/`, `frames/`, `renders/`, `review/`, `*.mp4`, `*.wav`, built
   `index.html` files, `node_modules/` and `__pycache__/` as a safety net.
 - A style that is proven and reusable may be promoted into the repo (code, `STYLE.md`, a small
