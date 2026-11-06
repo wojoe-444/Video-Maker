@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Generate a clip with a video model through OpenRouter's Video Generation API (async: submit, poll, download).
 //   usage: node tools/videogen.mjs --prompt-file prompt.txt --out clip.mp4 [--image first.png] [--model google/gemini-omni-1.2-flash]
-//          [--duration 4] [--resolution 720p] [--aspect 16:9] [--audio] [--seed N]
+//          [--duration 4] [--resolution 720p] [--aspect 16:9] [--audio | --no-audio] [--seed N]
+// Audio is left to the model unless --audio or --no-audio is given (some models, like Gemini Omni, always make audio).
 // The key comes from OPENROUTER_API_KEY, else from pi's auth file (~/.pi/agent/auth.json, "openrouter" entry).
 // --image is sent as the first frame (a data: URL), so the clip starts on that picture.
 import fs from 'node:fs';
@@ -33,8 +34,9 @@ const body = {
   duration: Number(opt('--duration', 4)),
   resolution: opt('--resolution', '720p'),
   aspect_ratio: opt('--aspect', '16:9'),
-  generate_audio: flag('--audio'),
 };
+if (flag('--audio')) body.generate_audio = true;
+if (flag('--no-audio')) body.generate_audio = false;
 if (opt('--seed')) body.seed = Number(opt('--seed'));
 const img = opt('--image');
 if (img) {
