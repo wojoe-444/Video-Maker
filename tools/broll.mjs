@@ -6,8 +6,9 @@
 //                                                 download what is missing, then refresh library.json + index.html
 //   node tools/broll.mjs sheet                    rebuild <root>/broll/index.html (a page that plays every clip)
 // Options: --manifest <file> (default broll/manifest.json), --out <dir> (default <content root>/broll).
-// Pexels: uses the API when PEXELS_API_KEY is set (free key at https://www.pexels.com/api/), which also records the
-// author; without a key it uses the public download link https://www.pexels.com/download/video/<id>/.
+// Pexels: set PEXELS_API_KEY (free key at https://www.pexels.com/api/). The official API gives the file link and the
+// author. Without a key it tries the public link https://www.pexels.com/download/video/<id>/, which Pexels may refuse
+// to scripts; the tool does not disguise itself as a browser.
 // Mixkit / Pixabay / Commons / other: give a direct "url" in the manifest entry.
 // ffprobe (from ffmpeg) is used to record width, height and duration when it is on PATH.
 import fs from 'node:fs';
@@ -26,7 +27,7 @@ const manifestPath = path.resolve(opt('--manifest', path.join(here, '..', 'broll
 const outDir = path.resolve(opt('--out', path.join(contentRoot(), 'broll')));
 const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
 const libPath = path.join(outDir, 'library.json');
-const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
+const UA = 'video-maker-broll/1.0 (personal use)';
 
 for (const c of manifest.clips) {
   if (!manifest.licenses[c.license]) { console.error(`${c.id}: license "${c.license}" is not in manifest.licenses`); process.exit(1); }

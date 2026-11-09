@@ -10,8 +10,8 @@ node tools/broll.mjs list           # what is in the manifest, ticked when downl
 
 `fetch` also writes `library.json` (resolved file, size, duration, author) and `index.html`, a page that plays
 every clip so you can pick by eye. From the Claude app, set `VIDEOMAKER_HOME` to a folder outside AppData
-(see CLAUDE.md). With `PEXELS_API_KEY` set (free at https://www.pexels.com/api/), Pexels downloads go through
-the API and the author is recorded too.
+(see CLAUDE.md). Set `PEXELS_API_KEY` (free at https://www.pexels.com/api/) so Pexels downloads go through the
+official API, which also records each clip's author. Without a key, Pexels may refuse the download.
 
 ## Adding a clip
 
