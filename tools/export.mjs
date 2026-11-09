@@ -14,6 +14,7 @@
 // blur:     --blur 4 averages 4 sub-frames per frame (a 180-degree shutter) — styles on 1s only (STYLE.ones)
 // music:    piece.json "music": { "file": "audio/track.wav", "start": 0, "gain": 0, "fade": 0.5 } — the user's track
 //           replaces the synthesized music; the score's sfx bus is mixed on top, then loudness to -14 LUFS
+// backdrop: piece.json "background": { "file": "clip.mp4", "start": 0 } — a dialogue reel's own looping clip under the frames
 // voice:    piece.json "voice": { "file": "voice/voice.wav", "music": -14, "gain": 0 } — the voice-over (tools/voice.mjs)
 //           over the score: the score at "music" dB, ducked a little more while the voice speaks, then -14 LUFS
 //
@@ -172,9 +173,19 @@ await browser.close();
 const full = from === 0 && to === meta.frames - 1;
 if (!flag('no-mux') && !onlyAudio && full) {
   const out = path.join(RENDERS, opt('out', `final${SUFFIX}.mp4`));
+  // a dialogue reel over the user's own clip: piece.json "background": { "file", "start" } — the frames are drawn with a
+  // transparent background, so lay them over the clip (scaled to cover, looped, its own sound dropped)
+  const BGV = PIECE_JSON.background && PIECE_JSON.background.file ? path.resolve(ROOT, PIECE_JSON.background.file) : null;
+  if (BGV && !fs.existsSync(BGV)) { console.error('background clip not found:', BGV); process.exit(1); }
+  const withAudio = fs.existsSync(wavPath) && !flag('no-audio');
+  const bgIn = withAudio ? 2 : 1;
   const args = ['-y', '-hide_banner', '-loglevel', 'error',
     '-framerate', String(meta.fps), '-i', path.join(FR, 'f%04d.png'),
-    ...(fs.existsSync(wavPath) && !flag('no-audio') ? ['-i', wavPath, '-map', '0:v:0', '-map', '1:a:0', '-c:a', 'aac', '-b:a', '192k'] : ['-map', '0:v:0']),
+    ...(withAudio ? ['-i', wavPath] : []),
+    ...(BGV ? ['-stream_loop', '-1', '-ss', String(PIECE_JSON.background.start ?? 0), '-i', BGV,
+      '-filter_complex', `[${bgIn}:v]scale=${meta.width}:${meta.height}:force_original_aspect_ratio=increase,crop=${meta.width}:${meta.height},fps=${meta.fps},setsar=1[bg];[bg][0:v]overlay=format=auto:shortest=1[v]`,
+      '-map', '[v]'] : ['-map', '0:v:0']),
+    ...(withAudio ? ['-map', '1:a:0', '-c:a', 'aac', '-b:a', '192k'] : []),
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '14', '-pix_fmt', 'yuv420p', '-r', String(meta.fps),
     '-frames:v', String(meta.frames), '-movflags', '+faststart', out];
   const r = spawnSync('ffmpeg', args, { stdio: 'inherit' });

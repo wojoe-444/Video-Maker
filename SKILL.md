@@ -75,6 +75,13 @@ Ask at intake (question 3). With a voice, **the voice is the clock**: each beat 
 6. `piece.json`: `"voice": { "file": "voice/voice.wav", "music": -12 }`. Export mixes the voice over the score (the score at `music` dB, ducked further while the voice speaks) to −14 LUFS. Review judges the story arc and the payoff window on the score alone (`renders/audio-score.wav`; a voice is louder than any hit) and the voice with its NARRATION check.
 7. **Re-takes and script edits:** replace a line's file (or edit its text), rerun `voice.mjs`, rebuild: scenes cued from `VOICE` move with it. A changed word can orphan a cue that points at it; check those beats.
 
+## Dialogue reels (a separate format)
+
+For a reel where two characters banter through an explainer (one explains, one riffs, word-by-word captions, a
+looping background), start from [templates/dialogue-reel/](templates/dialogue-reel/README.md) instead of the flow's
+story and look check-ins: the check-in is the **script** (who says what, which card shows) plus one still. Cast lives
+in [cast/](cast/README.md), loops in `backgrounds/`, the renderer is `kit/reel.js`. The voice is the clock, as above.
+
 ## Music: the user's own track (optional)
 
 Ask at intake (question 6). Without a track the score is composed in code on a 120 BPM grid. With one:

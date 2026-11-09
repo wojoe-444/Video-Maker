@@ -64,7 +64,8 @@ In the reference everything lives under `plugins/animate/skills/animate/`; here 
 | `grammar/` | `STORY.md`, `FORMATS.md` (8 short-form formats), `FRAME.md` (what any frame needs) |
 | `kit/` | the shared runtime: `core.js` (seeded RNG, boil, cameras, easing), `morph.js` (shape-morph transitions), `board.js` (storyboard), `score-head.js` / `score-tail.js` (synth + loudness) |
 | `styles/<name>/` | plug-in looks: `kit.js`, `STYLE.md`, `sample.png`, `demo/` (cut-paper, crosshatch, riso, sketchbook, math, pixel, isometric) |
-| `templates/` | starting points: `piece/` (morph chain), `beat-cut/` (cuts on the beat), `style/` |
+| `templates/` | starting points: `piece/` (morph chain), `beat-cut/` (cuts on the beat), `style/`, `dialogue-reel/` (two characters banter through an explainer) |
+| `kit/reel.js`, `cast/`, `backgrounds/` | dialogue reels: the renderer (stickers, word captions, cards), the characters, the background loops |
 | `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/`, plus `videogen` and `musicgen` (video and song models through OpenRouter) |
 | `examples/history-of-ai/` | a complete 60s reference piece |
 
