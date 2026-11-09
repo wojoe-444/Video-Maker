@@ -65,7 +65,7 @@ In the reference everything lives under `plugins/animate/skills/animate/`; here 
 | `kit/` | the shared runtime: `core.js` (seeded RNG, boil, cameras, easing), `morph.js` (shape-morph transitions), `board.js` (storyboard), `score-head.js` / `score-tail.js` (synth + loudness) |
 | `styles/<name>/` | plug-in looks: `kit.js`, `STYLE.md`, `sample.png`, `demo/` (cut-paper, crosshatch, riso, sketchbook, math, pixel, isometric) |
 | `templates/` | starting points: `piece/` (morph chain), `beat-cut/` (cuts on the beat), `style/` |
-| `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/` |
+| `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/`, plus `videogen` and `musicgen` (video and song models through OpenRouter) |
 | `examples/history-of-ai/` | a complete 60s reference piece |
 
 A **piece** is `piece.json` (format: width, height, fps, bpm, duration, frames; `style`; review safe
