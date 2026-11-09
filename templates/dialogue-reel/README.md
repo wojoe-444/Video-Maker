@@ -33,7 +33,7 @@ node tools/review.mjs my-reel
 |---|---|---|
 | cast | `piece.json` `"cast": ["einstein", "newton"]` and `REEL.cast` in `src/head.html` (side, scale) | the speaker id in each script line is the cast name; drawings live in `cast/<name>.js` (see [cast/README.md](../../cast/README.md)) |
 | voices | `voice/script.json` `"cast": { "<name>": { "voice", "speed" } }` | Kokoro presets or blends such as `"am_michael:0.7+bm_fable:0.3"` make a voice no preset has; a line can override with its own `voice` |
-| background | `piece.json` `"background"` | `"block-run"` (blocky parkour), `"sand-slice"` (kinetic sand, a "satisfying" loop), or your own clip: `{ "file": "bg.mp4", "start": 0 }` |
+| background | `piece.json` `"background"` | `"block-run"` (blocky parkour), `"sand-slice"` (kinetic sand, a "satisfying" loop), a clip from the b-roll library: `{ "broll": "<id>" }` (see [broll/](../../broll/README.md)), or any clip you own: `{ "file": "bg.mp4", "start": 0 }` |
 | cards | `src/scenes.js` `CARDS` | one function per card key named in the script; a card holds until the next line that names one (`"none"` clears it) |
 | layout | `REEL` in `src/head.html` | `layout: 'solo'` (only the speaker, springing in) or `'duo'` (both, the listener dimmed); `dim`, `castScale`, `caption.{words,y,size}`, `title` |
 | moods | a line's `"mood"` | each character reads its own: Einstein `neutral`/`excited`/`smug`, Newton `grumpy`/`smug`/`shocked` |

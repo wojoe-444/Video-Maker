@@ -9,7 +9,7 @@
 //   "styles/<name>/<file>"  a file of a named style
 //   "cast"                  one file per name in piece.json "cast" (dialogue reels): cast/<name>.js
 //   "background"            the loop named by piece.json "background" (a name, or { "name" | "file" }): backgrounds/<name>.js;
-//                           a "file" (the user's own clip) uses backgrounds/video.js and is laid under the frames at export
+//                           a "file" or "broll" clip (laid under the frames at export) uses backgrounds/video.js
 //   anything else           relative to the piece dir
 // Cast and backgrounds, like styles, are found beside the piece or above it first (a personal cast/ in the content
 // root), then in this skill's cast/ and backgrounds/.
@@ -58,7 +58,7 @@ function partFile(kind, name) {
   process.exit(1);
 }
 const bgSpec = typeof meta.background === 'string' ? { name: meta.background } : meta.background || {};
-const bgName = bgSpec.file ? 'video' : bgSpec.name || 'block-run';
+const bgName = bgSpec.file || bgSpec.broll ? 'video' : bgSpec.name || 'block-run';
 function resolve(p) {
   if (p.startsWith('cast/') && !fs.existsSync(path.join(ROOT, p))) return partFile('cast', p.slice(5).replace(/\.js$/, ''));
   if (p === 'background') return partFile('backgrounds', bgName);

@@ -66,7 +66,8 @@ In the reference everything lives under `plugins/animate/skills/animate/`; here 
 | `styles/<name>/` | plug-in looks: `kit.js`, `STYLE.md`, `sample.png`, `demo/` (cut-paper, crosshatch, riso, sketchbook, math, pixel, isometric) |
 | `templates/` | starting points: `piece/` (morph chain), `beat-cut/` (cuts on the beat), `style/`, `dialogue-reel/` (two characters banter through an explainer) |
 | `kit/reel.js`, `cast/`, `backgrounds/` | dialogue reels: the renderer (stickers, word captions, cards), the characters, the background loops |
-| `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/`, plus `videogen` and `musicgen` (video and song models through OpenRouter) |
+| `tools/` | Node CLIs: `build`, `tile`, `still`, `storyboard`, `export`, `review`, `compare`, `capture`, `beats`, `voice`, `gallery`, `framehash`, `gpu`, `measure/`, plus `videogen` and `musicgen` (video and song models through OpenRouter), and `broll` (downloads the stock clip library) |
+| `broll/` | `manifest.json`: every background/b-roll clip with its source and license (clips themselves download to `<content root>roll\`); `README.md` has the license and gameplay rules |
 | `examples/history-of-ai/` | a complete 60s reference piece |
 
 A **piece** is `piece.json` (format: width, height, fps, bpm, duration, frames; `style`; review safe

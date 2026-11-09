@@ -14,12 +14,12 @@
 // blur:     --blur 4 averages 4 sub-frames per frame (a 180-degree shutter) — styles on 1s only (STYLE.ones)
 // music:    piece.json "music": { "file": "audio/track.wav", "start": 0, "gain": 0, "fade": 0.5 } — the user's track
 //           replaces the synthesized music; the score's sfx bus is mixed on top, then loudness to -14 LUFS
-// backdrop: piece.json "background": { "file": "clip.mp4", "start": 0 } — a dialogue reel's own looping clip under the frames
+// backdrop: piece.json "background": { "file": "clip.mp4" | "broll": "<id>", "start": 0 } — a dialogue reel's looping clip under the frames
 // voice:    piece.json "voice": { "file": "voice/voice.wav", "music": -14, "gain": 0 } — the voice-over (tools/voice.mjs)
 //           over the score: the score at "music" dB, ducked a little more while the voice speaks, then -14 LUFS
 //
 // usage: node tools/export.mjs pieces/<name> [--from N] [--to N] [--workers 4] [--no-audio] [--no-mux] [--no-captions] [--only-audio] [--share] [--gpu] [--format F | --formats A,B] [--blur N]
-import { resolvePiece } from './paths.mjs';
+import { resolvePiece, contentRoot } from './paths.mjs';
 import { createRequire } from 'node:module';
 import { execSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -175,7 +175,14 @@ if (!flag('no-mux') && !onlyAudio && full) {
   const out = path.join(RENDERS, opt('out', `final${SUFFIX}.mp4`));
   // a dialogue reel over the user's own clip: piece.json "background": { "file", "start" } — the frames are drawn with a
   // transparent background, so lay them over the clip (scaled to cover, looped, its own sound dropped)
-  const BGV = PIECE_JSON.background && PIECE_JSON.background.file ? path.resolve(ROOT, PIECE_JSON.background.file) : null;
+  // { "broll": "<id>" } picks a clip from the b-roll library (tools/broll.mjs fetch -> <content root>/broll/library.json)
+  const BGS = PIECE_JSON.background || {};
+  let BGV = BGS.file ? path.resolve(ROOT, BGS.file) : null;
+  if (BGS.broll) {
+    const libDir = path.join(contentRoot(), 'broll'), lib = fs.existsSync(path.join(libDir, 'library.json')) ? JSON.parse(fs.readFileSync(path.join(libDir, 'library.json'), 'utf8')) : { clips: {} };
+    if (!lib.clips[BGS.broll]) { console.error(`b-roll clip "${BGS.broll}" not downloaded (node tools/broll.mjs fetch)`); process.exit(1); }
+    BGV = path.join(libDir, lib.clips[BGS.broll].file);
+  }
   if (BGV && !fs.existsSync(BGV)) { console.error('background clip not found:', BGV); process.exit(1); }
   const withAudio = fs.existsSync(wavPath) && !flag('no-audio');
   const bgIn = withAudio ? 2 : 1;
