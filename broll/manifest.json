@@ -1,0 +1,328 @@
+{
+ "about": "Background and b-roll clips for vertical reels. Code-only repo: this lists sources and licenses; the clips download to <content root>/broll/<category>/<id>.mp4 with `node tools/broll.mjs fetch`. Every clip must name a license from `licenses`.",
+ "licenses": {
+  "pexels": {
+   "name": "Pexels License",
+   "url": "https://www.pexels.com/license/",
+   "attribution": "not required (credit appreciated)",
+   "summary": "Free for personal and commercial use and may be edited. Not allowed: selling or redistributing unaltered copies, implying endorsement by people or brands shown, or using identifiable people in an offensive or misleading way."
+  },
+  "pixabay": {
+   "name": "Pixabay Content License",
+   "url": "https://pixabay.com/service/license-summary/",
+   "attribution": "not required",
+   "summary": "Free to use and modify. Not allowed: standalone redistribution with no creative effort, misleading use, immoral or illegal use of recognisable people, commercial use of shown trademarks."
+  },
+  "mixkit": {
+   "name": "Mixkit Free License",
+   "url": "https://mixkit.co/license/",
+   "attribution": "not required",
+   "summary": "Free for commercial and personal projects such as YouTube and social videos. Items cannot be resold or redistributed in their original form."
+  },
+  "own": {
+   "name": "Our own work",
+   "url": "",
+   "attribution": "none",
+   "summary": "Rendered by the video maker or recorded by Walter. For Minecraft recordings see broll/README.md (Mojang Usage Guidelines)."
+  }
+ },
+ "clips": [
+  {
+   "id": "pexels-30284959",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 30284959,
+   "page": "https://www.pexels.com/video/nighttime-software-development-workspace-30284959/",
+   "title": "Nighttime software development workspace",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-8720746",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 8720746,
+   "page": "https://www.pexels.com/video/a-person-encoding-on-a-laptop-8720746/",
+   "title": "A person encoding on a laptop",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-12893579",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 12893579,
+   "page": "https://www.pexels.com/video/hands-typing-on-laptop-keyboard-12893579/",
+   "title": "Hands typing on laptop keyboard",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-33315117",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 33315117,
+   "page": "https://www.pexels.com/video/blurred-code-on-computer-monitor-display-33315117/",
+   "title": "Blurred code on computer monitor display",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-33314914",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 33314914,
+   "page": "https://www.pexels.com/video/modern-workspace-with-coding-on-screen-33314914/",
+   "title": "Modern workspace with coding on screen",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-6803592",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 6803592,
+   "page": "https://www.pexels.com/video/an-employee-working-in-dual-monitor-6803592/",
+   "title": "An employee working in dual monitor",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-34818829",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 34818829,
+   "page": "https://www.pexels.com/video/focused-programmer-working-at-desk-34818829/",
+   "title": "Focused programmer working at desk",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-38993329",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 38993329,
+   "page": "https://www.pexels.com/video/coding-at-home-office-on-mechanical-keyboard-38993329/",
+   "title": "Coding at home office on mechanical keyboard",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-34679079",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 34679079,
+   "page": "https://www.pexels.com/video/collaborative-software-development-coding-session-34679079/",
+   "title": "Collaborative software development coding session",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-5473803",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 5473803,
+   "page": "https://www.pexels.com/video/a-female-coder-busy-with-her-work-5473803/",
+   "title": "A female coder busy with her work",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-35331999",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 35331999,
+   "page": "https://www.pexels.com/video/focused-man-working-at-desk-with-headphones-35331999/",
+   "title": "Focused man working at desk with headphones",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-12896413",
+   "category": "tech-people",
+   "source": "pexels",
+   "sourceId": 12896413,
+   "page": "https://www.pexels.com/video/over-the-shoulder-view-of-a-working-businessman-12896413/",
+   "title": "Over the shoulder view of a working businessman",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-31775440",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 31775440,
+   "page": "https://www.pexels.com/video/busy-modern-office-with-employees-collaborating-31775440/",
+   "title": "Busy modern office with employees collaborating",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-7643614",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 7643614,
+   "page": "https://www.pexels.com/video/professional-people-brainstorming-during-meeting-7643614/",
+   "title": "Professional people brainstorming during meeting",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-7812404",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 7812404,
+   "page": "https://www.pexels.com/video/man-presenting-with-his-colleagues-7812404/",
+   "title": "Man presenting with his colleagues",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-5439024",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 5439024,
+   "page": "https://www.pexels.com/video/woman-presenting-in-a-meeting-5439024/",
+   "title": "Woman presenting in a meeting",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-12893532",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 12893532,
+   "page": "https://www.pexels.com/video/people-working-in-office-12893532/",
+   "title": "People working in office",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-8034705",
+   "category": "office-people",
+   "source": "pexels",
+   "sourceId": 8034705,
+   "page": "https://www.pexels.com/video/colleagues-having-a-conversation-at-work-8034705/",
+   "title": "Colleagues having a conversation at work",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-34296543",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 34296543,
+   "page": "https://www.pexels.com/video/mesmerizing-turkish-marbling-art-in-action-34296543/",
+   "title": "Mesmerizing turkish marbling art in action",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-34296548",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 34296548,
+   "page": "https://www.pexels.com/video/turkish-traditional-marbling-art-with-red-and-orange-34296548/",
+   "title": "Turkish traditional marbling art with red and orange",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-33568939",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 33568939,
+   "page": "https://www.pexels.com/video/vibrant-watercolor-mixing-on-artist-palette-33568939/",
+   "title": "Vibrant watercolor mixing on artist palette",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-5908185",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 5908185,
+   "page": "https://www.pexels.com/video/pouring-paint-on-a-cube-5908185/",
+   "title": "Pouring paint on a cube",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-7253492",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 7253492,
+   "page": "https://www.pexels.com/video/woman-pouring-resin-into-a-mold-7253492/",
+   "title": "Woman pouring resin into a mold",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-5871940",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 5871940,
+   "page": "https://www.pexels.com/video/hand-behind-a-glass-with-colored-sand-5871940/",
+   "title": "Hand behind a glass with colored sand",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-8014260",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 8014260,
+   "page": "https://www.pexels.com/video/a-hand-spreading-rainbow-glitters-8014260/",
+   "title": "A hand spreading rainbow glitters",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-8746938",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 8746938,
+   "page": "https://www.pexels.com/video/spinning-wheel-wind-spinner-in-slow-motion-8746938/",
+   "title": "Spinning wheel wind spinner in slow motion",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-5213591",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 5213591,
+   "page": "https://www.pexels.com/video/close-up-of-a-spinning-top-5213591/",
+   "title": "Close up of a spinning top",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-30335428",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 30335428,
+   "page": "https://www.pexels.com/video/decadent-chocolate-cake-with-pouring-ganache-30335428/",
+   "title": "Decadent chocolate cake with pouring ganache",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-36504176",
+   "category": "satisfying",
+   "source": "pexels",
+   "sourceId": 36504176,
+   "page": "https://www.pexels.com/video/slicing-a-fresh-watermelon-on-wooden-board-36504176/",
+   "title": "Slicing a fresh watermelon on wooden board",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-35130571",
+   "category": "abstract-loop",
+   "source": "pexels",
+   "sourceId": 35130571,
+   "page": "https://www.pexels.com/video/colorful-abstract-3d-staircase-loop-animation-35130571/",
+   "title": "Colorful abstract 3d staircase loop animation",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-31889897",
+   "category": "abstract-loop",
+   "source": "pexels",
+   "sourceId": 31889897,
+   "page": "https://www.pexels.com/video/abstract-blue-liquid-flowing-in-3d-structure-31889897/",
+   "title": "Abstract blue liquid flowing in 3d structure",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-16456768",
+   "category": "abstract-loop",
+   "source": "pexels",
+   "sourceId": 16456768,
+   "page": "https://www.pexels.com/video/digital-animation-of-colorful-square-tubes-in-motion-16456768/",
+   "title": "Digital animation of colorful square tubes in motion",
+   "license": "pexels"
+  },
+  {
+   "id": "pexels-35640869",
+   "category": "abstract-loop",
+   "source": "pexels",
+   "sourceId": 35640869,
+   "page": "https://www.pexels.com/video/vibrant-abstract-organic-patterns-in-motion-35640869/",
+   "title": "Vibrant abstract organic patterns in motion",
+   "license": "pexels"
+  }
+ ]
+}
