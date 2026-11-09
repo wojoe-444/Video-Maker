@@ -7,7 +7,12 @@
 //   "kit/<file>"            this skill's kit/
 //   "style"                 the kit.js of the style named by piece.json "style" (default "cut-paper")
 //   "styles/<name>/<file>"  a file of a named style
+//   "cast"                  one file per name in piece.json "cast" (dialogue reels): cast/<name>.js
+//   "background"            the loop named by piece.json "background" (a name, or { "name" | "file" }): backgrounds/<name>.js;
+//                           a "file" or "broll" clip (laid under the frames at export) uses backgrounds/video.js
 //   anything else           relative to the piece dir
+// Cast and backgrounds, like styles, are found beside the piece or above it first (a personal cast/ in the content
+// root), then in this skill's cast/ and backgrounds/.
 // A style is found in a styles/<name>/ folder beside the piece or above it, then in this skill's styles/
 // (so a style made for one project, e.g. <project>/styles/my-look/, works for every piece in that project).
 // Checks: the script compiles; the style defines STYLE; no data: URIs and no http(s) URLs in the code.
@@ -39,7 +44,24 @@ function styleDir(name) {
   console.error(`unknown style "${name}" (no styles/${name}/kit.js beside the piece or in the skill). Skill styles: ${have.join(', ')}`);
   process.exit(1);
 }
+// a cast member or background loop: the piece's own tree first (walking up), then the skill
+function partFile(kind, name) {
+  for (let d = ROOT; ; d = path.dirname(d)) {
+    const c = path.join(d, kind, name + '.js');
+    if (fs.existsSync(c)) return c;
+    if (path.dirname(d) === d) break;
+  }
+  const c = path.join(SKILL, kind, name + '.js');
+  if (fs.existsSync(c)) return c;
+  const have = fs.existsSync(path.join(SKILL, kind)) ? fs.readdirSync(path.join(SKILL, kind)).filter((n) => n.endsWith('.js')).map((n) => n.slice(0, -3)) : [];
+  console.error(`unknown ${kind} "${name}" (no ${kind}/${name}.js beside the piece or in the skill). Skill ${kind}: ${have.join(', ')}`);
+  process.exit(1);
+}
+const bgSpec = typeof meta.background === 'string' ? { name: meta.background } : meta.background || {};
+const bgName = bgSpec.file || bgSpec.broll ? 'video' : bgSpec.name || 'block-run';
 function resolve(p) {
+  if (p.startsWith('cast/') && !fs.existsSync(path.join(ROOT, p))) return partFile('cast', p.slice(5).replace(/\.js$/, ''));
+  if (p === 'background') return partFile('backgrounds', bgName);
   if (p === 'style') return path.join(styleDir(styleName), 'kit.js');
   if (p === 'kit/paper.js') return path.join(SKILL, 'styles', 'cut-paper', 'kit.js');   // the v0.1 name
   if (p.startsWith('kit/')) return path.join(SKILL, 'kit', p.slice(4));
@@ -48,7 +70,8 @@ function resolve(p) {
   return path.join(ROOT, p);
 }
 // "scenes": ["src/era-01.js", ...] swaps src/scenes.js for several files in the default order (one per agent / era)
-const parts = meta.build || (meta.scenes ? DEFAULT.flatMap((p) => (p === 'src/scenes.js' ? meta.scenes : [p])) : DEFAULT);
+const parts = (meta.build || (meta.scenes ? DEFAULT.flatMap((p) => (p === 'src/scenes.js' ? meta.scenes : [p])) : DEFAULT))
+  .flatMap((p) => (p === 'cast' ? (meta.cast || []).map((n) => 'cast/' + n) : [p]));
 let out = '';
 for (const p of parts) {
   const file = resolve(p);

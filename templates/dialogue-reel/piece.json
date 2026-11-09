@@ -1,0 +1,12 @@
+{
+  "name": "git-in-60",
+  "title": "Einstein and Newton: commit, push, pull request, merge",
+  "format": { "width": 1080, "height": 1920, "fps": 24, "bpm": 90 },
+  "storyFormat": "dialogue reel (two characters, one explains, one riffs; the voice is the clock)",
+  "style": "reel",
+  "cast": ["einstein", "newton"],
+  "background": "block-run",
+  "voice": { "file": "voice/voice.wav", "music": -20, "gain": 0 },
+  "build": ["src/head.html", "kit/core.js", "cast", "background", "kit/reel.js", "src/scenes.js", "kit/board.js", "kit/score-head.js", "src/score.js", "kit/score-tail.js"],
+  "review": { "safe": { "top": 240, "bottom": 420, "right": 140 }, "refs": {} }
+}

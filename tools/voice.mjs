@@ -6,6 +6,7 @@
 //   file   the line's audio, relative to <piece>/voice/: a text-to-speech take (e.g. the ElevenLabs MCP's download link,
 //          saved there), or the user's own recording. One file per line, so pauses and re-takes stay per line.
 //   after  the pause after the line (s); lead = silence before the first line, tail = after the last
+//   speaker, card, mood   (dialogue reels) who says the line, which card shows, the face; copied into voice.json
 // writes <piece>/voice/voice.wav (48 kHz mono, the lines with their pauses) and <piece>/voice.json:
 //   { duration, lines: [ { id, text, t0, t1, words: [ { w, t0, t1 } ] } ] }; tools/build.mjs injects it as VOICE.
 // Word times come from the audio itself (tools/voice_words.py, faster-whisper, local); without it they are estimated
@@ -55,7 +56,9 @@ for (const [i, L] of S.lines.entries()) {
     if (!scratch(L.text, file)) { console.error('scratch voice failed for', id); process.exit(1); }
   }
   const pcm = decode(file), dur = pcm.length / 2 / SR;
-  lines.push({ id, text: L.text, t0: +t.toFixed(3), t1: +(t + dur).toFixed(3), take: path.relative(ROOT, file).replace(/\\/g, '/') });
+  // a dialogue reel's per-line fields (speaker, card, mood) ride along into voice.json for the scenes to read
+  const extra = {}; for (const k of ['speaker', 'card', 'mood']) if (L[k] != null) extra[k] = L[k];
+  lines.push({ id, text: L.text, ...extra, t0: +t.toFixed(3), t1: +(t + dur).toFixed(3), take: path.relative(ROOT, file).replace(/\\/g, '/') });
   parts.push([Math.round(t * SR), pcm]);
   t += dur + (L.after ?? 0.35);
 }
@@ -79,10 +82,13 @@ let matched = 0, totalWords = 0;
 for (const L of lines) {
   const words = L.text.split(/\s+/).filter((w) => norm(w));
   totalWords += words.length;
-  // estimate: spread the line's length over its words by letter count
+  // estimate: spread the line's length over its words by letter count, leaving the pause a voice takes after a
+  // full stop (~0.3s) or a comma (~0.12s) out of the words
   const lens = words.map((w) => norm(w).length + 1), sum = lens.reduce((a, b) => a + b, 0);
+  const gaps = words.map((w, i) => (i === words.length - 1 ? 0 : /[.!?]["”']?$/.test(w) ? 0.3 : /[,;:]["”']?$/.test(w) ? 0.12 : 0));
+  const gapSum = gaps.reduce((a, b) => a + b, 0), speak = Math.max((L.t1 - L.t0) * 0.6, L.t1 - L.t0 - gapSum), gk = (L.t1 - L.t0 - speak) / (gapSum || 1);
   let acc = L.t0;
-  L.words = words.map((w, i) => { const d = (L.t1 - L.t0) * lens[i] / sum, o = { w, t0: +acc.toFixed(3), t1: +(acc + d).toFixed(3), est: true }; acc += d; return o; });
+  L.words = words.map((w, i) => { const d = speak * lens[i] / sum, o = { w, t0: +acc.toFixed(3), t1: +(acc + d).toFixed(3), est: true }; acc += d + gaps[i] * gk; return o; });
   if (!heard) continue;
   const H = heard.filter((h) => (h.t0 + h.t1) / 2 >= L.t0 - 0.15 && (h.t0 + h.t1) / 2 <= L.t1 + 0.15);
   // align script words to heard words (edit distance on normalised tokens), then take the times of the matches

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dialogue reel</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  DIALOGUE REEL — 9:16, 24fps. Two characters, one explains, one riffs, over a looping background.
+//  The voice is the clock: voice/script.json names each line's speaker, card and mood; tools/voice.mjs times it into
+//  voice.json (VOICE). Swap the cast (piece.json "cast" + REEL.cast below), the background (piece.json
+//  "background") and the cards (src/scenes.js) per reel; kit/reel.js draws everything else.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const DURATION = typeof VOICE !== 'undefined' ? Math.ceil(VOICE.duration * FPS) / FPS : 6;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Segoe Print", "Bradley Hand", "Comic Sans MS", cursive';
+const REEL = {
+  title: 'GIT IN 60 SECONDS',
+  layout: 'solo',                 // 'solo': only the speaker shows; 'duo': both, the listener smaller and dimmed
+  dim: 0.12,                      // darken the background so the words read
+  castScale: 0.72,
+  cast: { einstein: { side: 'left' }, newton: { side: 'right' } },
+  caption: { words: 3, y: 1090, size: 96 },
+  bpm: 90,
+};
+// background knobs (backgrounds/*.js read these)
+const BG_OPTS = { blockRun: { speed: 430, seed: 'git60' }, sandSlice: { period: 1.1 } };
